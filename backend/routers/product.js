@@ -157,5 +157,37 @@ router.get("/get/featured/:count", async (req, res) => {
   }
   res.send(products);
 });
+// upload gallery
+router.put(
+  "/gallery-images/:id",
+  uploadOptions.array("images", 10),
+  async (req, res) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).send("Invalid product id!");
+    }
+    const files = req.files;
+    let imagesPath = [];
+
+    const basePath = `${req.protocol}://${req.get("host")}/public/uploads`;
+    if (files) {
+      files.map((file) => {
+        imagesPath.push(`${basePath}${file.fileName}`);
+      });
+    }
+
+    const product = await Product.findByIdAndUpdate(
+      req.body.id,
+      {
+        images: imagesPath,
+      },
+      { new: true }
+    );
+
+    if (!product) {
+      return res.status(500).send("the product cannot be updated");
+    }
+    res.send(product);
+  }
+);
 
 module.exports = router;
