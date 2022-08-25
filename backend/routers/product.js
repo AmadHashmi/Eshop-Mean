@@ -84,7 +84,7 @@ router.post(`/`, uploadOptions.single("image"), async (req, res) => {
 
 // update product
 router.put("/:id", async (req, res) => {
-  if (!mongoose.isValidObjectId) {
+  if (!mongoose.isValidObjectId(req.params.id)) {
     return res.status(400).send("Invalid Product Id");
   }
   const category = await Category.findById(req.body.category);
