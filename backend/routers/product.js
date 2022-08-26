@@ -83,7 +83,7 @@ router.post(`/`, uploadOptions.single("image"), async (req, res) => {
 });
 
 // update product
-router.put("/:id", async (req, res) => {
+router.put("/:id", uploadOptions.single("image"), async (req, res) => {
   if (!mongoose.isValidObjectId(req.params.id)) {
     return res.status(400).send("Invalid Product Id");
   }
@@ -92,13 +92,28 @@ router.put("/:id", async (req, res) => {
     return res.status(400).send("Invalid Category");
   }
 
+  const product_ = await Product.findById(req.body.product);
+  if (!product_) {
+    return res.status(400).send("Invalid Product");
+  }
+
+  const file = req.file;
+  let imagePath;
+  if (file) {
+    const fileName = file.fileName;
+    const basePath = `${req.protocol}://${req.get("host")}/public/uploads`;
+    imagePath = `${basePath}${fileName}`;
+  } else {
+    imagePath = product.image;
+  }
+
   const product = await Product.findByIdAndUpdate(
     req.params.id,
     {
       name: req.body.name,
       description: req.body.description,
       richDescription: req.body.richDescription,
-      image: req.body.image,
+      image: imagePath,
       brand: req.body.brand,
       price: req.body.price,
       category: req.body.category,
