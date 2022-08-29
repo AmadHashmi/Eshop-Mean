@@ -14,7 +14,12 @@
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
-        "paths": {}
+        "paths": {
+            "@learnmean/orders": ["libs/orders/src/index.ts"],
+            "@learnmean/products": ["libs/products/src/index.ts"],
+            "@learnmean/ui": ["libs/ui/src/index.ts"],
+            "@learnmean/users": ["libs/users/src/index.ts"]
+        }
     },
     "exclude": ["node_modules", "tmp"]
 }
