@@ -92,7 +92,7 @@ router.put("/:id", uploadOptions.single("image"), async (req, res) => {
     return res.status(400).send("Invalid Category");
   }
 
-  const product_ = await Product.findById(req.body.product);
+  const product_ = await Product.findById(req.params.id);
   if (!product_) {
     return res.status(400).send("Invalid Product");
   }
@@ -100,11 +100,11 @@ router.put("/:id", uploadOptions.single("image"), async (req, res) => {
   const file = req.file;
   let imagePath;
   if (file) {
-    const fileName = file.fileName;
+    const fileName = file.filename;
     const basePath = `${req.protocol}://${req.get("host")}/public/uploads`;
     imagePath = `${basePath}${fileName}`;
   } else {
-    imagePath = product.image;
+    imagePath = product_.image;
   }
 
   const product = await Product.findByIdAndUpdate(
