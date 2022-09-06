@@ -8,9 +8,9 @@ export class Product {
   image?: string;
   images?: string[];
   brand?: string;
-  price?: string;
-  category?: number;
-  countInStock?: Category;
+  price?: number;
+  category?: Category;
+  countInStock?: number;
   rating?: number;
   numReviews?: number;
   isFeatured?: boolean;

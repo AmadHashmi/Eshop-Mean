@@ -10,6 +10,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 })
 export class UsersListComponent implements OnInit {
   users: User[] = [];
+  // endSubs$: Subject<any> = new Subject();
   constructor(
     private router: Router,
     private usersService: UsersService,
@@ -20,6 +21,10 @@ export class UsersListComponent implements OnInit {
   ngOnInit(): void {
     this._getProducts();
   }
+  // ngOnDestroy(): void {
+  //   this.endSubs$.next(null);
+  //   this.endSubs$.complete();
+  // }
   private _getProducts() {
     this.usersService.getUsers().subscribe((users) => {
       this.users = users;

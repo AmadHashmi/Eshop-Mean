@@ -1,20 +1,23 @@
 import { Location } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { ThisReceiver } from "@angular/compiler";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CategoriesService, Category } from "@learnmean/products";
 import { MessageService } from "primeng/api";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: "admin-category-form",
   templateUrl: "./category-form.component.html",
   styles: [],
 })
-export class CategoryFormComponent implements OnInit {
+export class CategoryFormComponent implements OnInit, OnDestroy {
   form: FormGroup;
   isSubmitted = false;
   editMode = false;
   currentCategoryId: string;
+  endSubs$: Subject<any> = new Subject();
   constructor(
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService,
@@ -32,6 +35,11 @@ export class CategoryFormComponent implements OnInit {
     });
 
     this._checkEditMode();
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.next(null);
+    this.endSubs$.complete();
   }
 
   onSubmit() {
@@ -108,11 +116,14 @@ export class CategoryFormComponent implements OnInit {
       if (params.id) {
         this.editMode = true;
         this.currentCategoryId = params.id;
-        this.categoriesService.getCategory(params.id).subscribe((category) => {
-          this.categoryForm.name.setValue(category.name);
-          this.categoryForm.icon.setValue(category.icon);
-          this.categoryForm.color.setValue(category.color);
-        });
+        this.categoriesService
+          .getCategory(params.id)
+          .pipe(takeUntil(this.endSubs$))
+          .subscribe((category) => {
+            this.categoryForm.name.setValue(category.name);
+            this.categoryForm.icon.setValue(category.icon);
+            this.categoryForm.color.setValue(category.color);
+          });
       }
     });
   }
