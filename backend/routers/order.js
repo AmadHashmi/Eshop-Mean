@@ -124,17 +124,6 @@ router.get("/get/totalsales", async (req, res) => {
   }
   res.send({ totalSales: totalSales.pop().totalsales });
 });
-
-router.get(`/get/count`, async (req, res) => {
-  const orderCount = await Order.countDocuments();
-
-  if (!orderCount) {
-    res.status(500).json({ success: false });
-  }
-  res.send({
-    orderCount: orderCount,
-  });
-});
 // user Order List
 router.get("/get/userorders/:id", async (req, res) => {
   const userordersList = await Order.find({ user: req.params.id })

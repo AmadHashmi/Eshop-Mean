@@ -17,7 +17,6 @@ export class UsersFormComponent implements OnInit {
   currentUserId: string;
   isSubmitted = false;
   countries = [];
-  // endSubs$: Subject<any> = new Subject();
   constructor(
     private usersService: UsersService,
     private formBuilder: FormBuilder,
@@ -32,10 +31,6 @@ export class UsersFormComponent implements OnInit {
     this._getCountries();
     this._checkEditMode();
   }
-  // ngOnDestroy(): void {
-  //   this.endSubs$.next(null);
-  //   this.endSubs$.complete();
-  // }
 
   private _initForm() {
     this.form = this.formBuilder.group({
@@ -122,7 +117,7 @@ export class UsersFormComponent implements OnInit {
 
   private _addUser(user: User) {
     this.usersService.createUser(user).subscribe(
-      () => {
+      (response) => {
         this.messageService.add({
           severity: "success",
           summary: "Success",
@@ -133,7 +128,7 @@ export class UsersFormComponent implements OnInit {
           this.location.back();
         }, 2000);
       },
-      () => {
+      (error) => {
         this.messageService.add({
           severity: "error",
           summary: "Failed",
@@ -145,7 +140,7 @@ export class UsersFormComponent implements OnInit {
 
   private _updateUser(user: User) {
     this.usersService.updateUser(user).subscribe(
-      () => {
+      (category) => {
         this.messageService.add({
           severity: "success",
           summary: "Success",
@@ -156,7 +151,7 @@ export class UsersFormComponent implements OnInit {
           this.router.navigate(["/users"]);
         }, 2000);
       },
-      () => {
+      (error) => {
         this.messageService.add({
           severity: "error",
           summary: "Failed",

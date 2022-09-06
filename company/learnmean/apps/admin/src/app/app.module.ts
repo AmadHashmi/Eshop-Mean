@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppComponent } from "./app.component";
+import { RouterModule, Routes } from "@angular/router";
 import { ShellComponent } from "./shared/shell/shell.component";
 import { SidebarComponent } from "./shared/sidebar/sidebar.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
@@ -11,7 +12,7 @@ import { CardModule } from "primeng/card";
 import { ToolbarModule } from "primeng/toolbar";
 import { ButtonModule } from "primeng/button";
 import { TableModule } from "primeng/table";
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { CategoriesService } from "@learnmean/products";
 import { CategoryFormComponent } from "./pages/categories/category-form/category-form.component";
 import { InputTextModule } from "primeng/inputtext";
@@ -31,11 +32,8 @@ import { UsersFormComponent } from "./pages/users/users-form/users-form.componen
 import { UsersListComponent } from "./pages/users/users-list/users-list.component";
 import { TagModule } from "primeng/tag";
 import { InputMaskModule } from "primeng/inputmask";
-import { OrdersListComponent } from "./pages/orders/orders-list/orders-list.component";
-import { OrderDetailComponent } from "./pages/orders/order-detail/order-detail.component";
-import { FieldsetModule } from "primeng/fieldset";
-import { JwtInterceptor, UsersModule } from "@learnmean/users";
-import { AppRoutingModule } from "./app-routing.module";
+import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
+import { OrderDetailComponent } from './pages/orders/order-detail/order-detail.component';
 const UX_MODULES = [
   CardModule,
   InputTextModule,
@@ -52,10 +50,55 @@ const UX_MODULES = [
   EditorModule,
   TagModule,
   InputMaskModule,
-  FieldsetModule,
-  UsersModule,
 ];
-
+const routes: Routes = [
+  {
+    path: "",
+    component: ShellComponent,
+    children: [
+      {
+        path: "dashboard",
+        component: DashboardComponent,
+      },
+      {
+        path: "categories",
+        component: CategoriesListComponent,
+      },
+      {
+        path: "categories/form",
+        component: CategoryFormComponent,
+      },
+      {
+        path: "categories/form/:id",
+        component: CategoryFormComponent,
+      },
+      {
+        path: "products",
+        component: ProductsListComponent,
+      },
+      {
+        path: "users",
+        component: UsersListComponent,
+      },
+      {
+        path: "products/form",
+        component: UsersFormComponent,
+      },
+      {
+        path: "products/form/:id",
+        component: UsersFormComponent,
+      },
+      {
+        path: "users/form",
+        component: UsersFormComponent,
+      },
+      {
+        path: "users/form/:id",
+        component: UsersFormComponent,
+      },
+    ],
+  },
+];
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,15 +120,10 @@ const UX_MODULES = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,
+    RouterModule.forRoot(routes, { initialNavigation: "enabledBlocking" }),
     ...UX_MODULES,
   ],
-  providers: [
-    CategoriesService,
-    MessageService,
-    ConfirmationService,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-  ],
+  providers: [CategoriesService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

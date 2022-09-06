@@ -2,7 +2,11 @@ import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { CategoriesService, ProductsService } from "@learnmean/products";
+import {
+  CategoriesService,
+  Product,
+  ProductsService,
+} from "@learnmean/products";
 import { MessageService } from "primeng/api";
 
 @Component({
@@ -15,7 +19,6 @@ export class ProductFormComponent implements OnInit {
   isSubmitted = false;
   currentProductId: string;
   form: FormGroup;
-  // endSubs$: Subject<any> = new Subject();
   categories = [];
   imageDisplay: string | ArrayBuffer;
   constructor(
@@ -33,11 +36,6 @@ export class ProductFormComponent implements OnInit {
     this._getCategories();
     this._checkEditMode();
   }
-
-  // ngOnDestroy(): void {
-  //   this.endSubs$.next(null);
-  //   this.endSubs$.complete();
-  // }
 
   private _initForm() {
     this.form = this.formBuilder.group({
@@ -110,7 +108,7 @@ export class ProductFormComponent implements OnInit {
 
   private _addProduct(productData: FormData) {
     this.productsService.createProduct(productData).subscribe(
-      () => {
+      (response) => {
         this.messageService.add({
           severity: "success",
           summary: "Success",
@@ -121,7 +119,7 @@ export class ProductFormComponent implements OnInit {
           this.location.back();
         }, 2000);
       },
-      () => {
+      (error) => {
         this.messageService.add({
           severity: "error",
           summary: "Failed",
