@@ -15,11 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@env/*": ["environments/*"],
       "@learnmean/orders": ["libs/orders/src/index.ts"],
       "@learnmean/products": ["libs/products/src/index.ts"],
       "@learnmean/ui": ["libs/ui/src/index.ts"],
-      "@learnmean/users": ["libs/users/src/index.ts"],
-      "@env/*": ["environments/*"]
+      "@learnmean/users": ["libs/users/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

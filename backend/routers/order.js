@@ -122,7 +122,18 @@ router.get("/get/totalsales", async (req, res) => {
   if (!totalSales) {
     return res.status(400).send("The order sales cannot be calculated!");
   }
-  res.send({ totalSales: totalSales.pop().totalsales });
+  res.send({ totalsales: totalSales.pop().totalsales });
+});
+
+router.get(`/get/count`, async (req, res) => {
+  const orderCount = await Order.countDocuments();
+
+  if (!orderCount) {
+    res.status(500).json({ success: false });
+  }
+  res.send({
+    orderCount: orderCount,
+  });
 });
 // user Order List
 router.get("/get/userorders/:id", async (req, res) => {
