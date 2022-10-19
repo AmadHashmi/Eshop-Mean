@@ -11,6 +11,7 @@ import { FooterComponent } from "./shared/footer/footer.component";
 import { AccordionModule } from "primeng/accordion";
 import { NavComponent } from "./shared/nav/nav.component";
 import { ProductsModule } from "@learnmean/products";
+import { UiModule } from "@learnmean/ui";
 const routes: Routes = [
   {
     path: "",
@@ -36,6 +37,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     AccordionModule,
     ProductsModule,
+    UiModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
