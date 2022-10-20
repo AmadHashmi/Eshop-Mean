@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { HomePageComponent } from "./pages/home-page/home-page.component";
 import { ProductListComponent } from "./pages/product-list/product-list.component";
@@ -38,6 +38,7 @@ const routes: Routes = [
     AccordionModule,
     ProductsModule,
     UiModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
