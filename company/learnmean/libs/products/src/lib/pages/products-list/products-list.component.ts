@@ -22,14 +22,23 @@ export class ProductsListComponent implements OnInit {
     this._getCategories();
   }
 
-  private _getProducts() {
-    this.productsService.getProducts().subscribe((resProducts) => {
-      this.products = resProducts;
-    });
+  private _getProducts(categoriesFilter?: string[]) {
+    this.productsService
+      .getProducts(categoriesFilter)
+      .subscribe((resProducts) => {
+        this.products = resProducts;
+      });
   }
   private _getCategories() {
     this.categoriesService.getCategories().subscribe((resCategories) => {
       this.categories = resCategories;
     });
+  }
+
+  categoryFilter() {
+    const selectedCategories = this.categories
+      .filter((category) => category.checked)
+      .map((category) => category.id);
+    this._getProducts(selectedCategories);
   }
 }

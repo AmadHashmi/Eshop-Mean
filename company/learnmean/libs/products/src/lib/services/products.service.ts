@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { map, Observable } from "rxjs";
 import { environment } from "@env/environment";
 import { Product } from "../models/products";
@@ -10,8 +10,12 @@ export class ProductsService {
   apiUrlProducts = `${environment.apiURL}products`;
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrlProducts);
+  getProducts(categoriesFilter?: string[]): Observable<Product[]> {
+    let params = new HttpParams();
+    if (categoriesFilter) {
+      params = params.append("categories", categoriesFilter.join(","));
+    }
+    return this.http.get<Product[]>(this.apiUrlProducts, { params: params });
   }
 
   getProduct(productId: string): Observable<Product> {
