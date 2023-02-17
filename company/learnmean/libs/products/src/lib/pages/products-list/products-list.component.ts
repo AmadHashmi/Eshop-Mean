@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { Category } from "../../models/categories";
 import { Product } from "../../models/products";
 import { CategoriesService } from "../../services/categories.service";
@@ -12,13 +13,24 @@ import { ProductsService } from "../../services/products.service";
 export class ProductsListComponent implements OnInit {
   products: Product[] = [];
   categories: Category[] = [];
+  isCategoryPage: boolean;
   constructor(
     private productsService: ProductsService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this._getProducts();
+    this.route.params.subscribe((params) => {
+      params["categoryid"]
+        ? this._getProducts([params["categoryid"]])
+        : this._getProducts();
+      params["categoryid"]
+        ? (this.isCategoryPage = true)
+        : (this.isCategoryPage = false);
+    });
+    //this._getProducts();
+
     this._getCategories();
   }
 
