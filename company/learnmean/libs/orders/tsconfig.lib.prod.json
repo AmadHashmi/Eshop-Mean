@@ -1,7 +1,8 @@
 {
-    "extends": "./tsconfig.lib.json",
-    "compilerOptions": {
-        "declarationMap": false
-    },
-    "angularCompilerOptions": {}
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "declarationMap": false,
+    "types": ["jest", "node"]
+  },
+  "angularCompilerOptions": {}
 }

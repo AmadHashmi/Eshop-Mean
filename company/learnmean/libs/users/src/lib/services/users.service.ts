@@ -3,12 +3,16 @@ import { HttpClient } from "@angular/common/http";
 import { map, Observable } from "rxjs";
 import { User } from "../models/users";
 import { environment } from "@env/environment";
+import * as countriesLib from "i18n-iso-countries";
+declare const require;
 @Injectable({
   providedIn: "root",
 })
 export class UsersService {
   apiUrlUsers = `${environment.apiURL}users`;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    countriesLib.registerLocale(require("i18n-iso-countries/langs/en.json"));
+  }
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrlUsers);
@@ -32,5 +36,19 @@ export class UsersService {
     return this.http
       .get<number>(`${this.apiUrlUsers}/get/count`)
       .pipe(map((objectValue: any) => objectValue.userCount));
+  }
+  getCountries(): { id: string; name: string }[] {
+    return Object.entries(
+      countriesLib.getNames("en", { select: "official" })
+    ).map((entry) => {
+      return {
+        id: entry[0],
+        name: entry[1],
+      };
+    });
+  }
+
+  getCountry(countryKey: string): string {
+    return countriesLib.getName(countryKey, "en");
   }
 }

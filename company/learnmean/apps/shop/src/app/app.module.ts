@@ -11,6 +11,10 @@ import { AccordionModule } from "primeng/accordion";
 import { NavComponent } from "./shared/nav/nav.component";
 import { ProductsModule } from "@learnmean/products";
 import { UiModule } from "@learnmean/ui";
+import { OrdersModule } from "@learnmean/orders";
+import { MessagesComponent } from "./shared/messages/messages.component";
+import { ToastModule } from "primeng/toast";
+import { MessageService } from "primeng/api";
 const routes: Routes = [
   {
     path: "",
@@ -24,6 +28,7 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     NavComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,8 +38,11 @@ const routes: Routes = [
     ProductsModule,
     UiModule,
     HttpClientModule,
+    OrdersModule,
+    ToastModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
+  exports: [MessagesComponent],
 })
 export class AppModule {}
