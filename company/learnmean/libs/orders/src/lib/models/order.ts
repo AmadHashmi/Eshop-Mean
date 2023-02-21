@@ -1,5 +1,4 @@
 import { OrderItem } from "./order-item";
-import { User } from "@learnmean/users";
 
 export class Order {
   id?: string;
@@ -12,6 +11,6 @@ export class Order {
   phone?: string;
   status?: number;
   totalPrice?: string;
-  user?: User;
+  user?: any;
   dateOrdered?: string;
 }
