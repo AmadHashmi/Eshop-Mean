@@ -36,6 +36,8 @@ import { OrderDetailComponent } from "./pages/orders/order-detail/order-detail.c
 import { JwtInterceptor, UsersModule } from "@learnmean/users";
 import { AppRoutingModule } from "./app-routing.module";
 import { FieldsetModule } from "primeng/fieldset";
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
 const UX_MODULES = [
   CardModule,
   InputTextModule,
@@ -79,6 +81,8 @@ const UX_MODULES = [
     UsersModule,
     AppRoutingModule,
     ...UX_MODULES,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     CategoriesService,

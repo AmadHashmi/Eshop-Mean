@@ -1,12 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
   selector: "shop-nav",
   templateUrl: "./nav.component.html",
   styles: [],
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }
