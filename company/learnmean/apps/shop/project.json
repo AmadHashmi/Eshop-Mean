@@ -6,6 +6,7 @@
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": [],
       "options": {
         "outputPath": "dist/apps/shop",
         "index": "apps/shop/src/index.html",

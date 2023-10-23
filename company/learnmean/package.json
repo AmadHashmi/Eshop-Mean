@@ -29,6 +29,7 @@
     "@nrwl/angular": "14.5.10",
     "@stripe/stripe-js": "^1.54.1",
     "animate.css": "^4.1.1",
+    "caniuse-lite": "^1.0.30001516",
     "i18n-iso-countries": "^7.5.0",
     "ngx-stripe": "^16.1.1",
     "normalize.css": "^8.0.1",
